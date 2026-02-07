@@ -212,7 +212,7 @@ class LRP_Public {
                     </div>
                     
                     <div class="lrp-controls">
-                        <button class="lrp-play-button" aria-label="<?php esc_attr_e( 'Play', 'live-radio-player' ); ?>">
+                        <button type="button" class="lrp-play-button" aria-label="<?php esc_attr_e( 'Play', 'live-radio-player' ); ?>">
                             <svg class="lrp-icon lrp-icon-play" viewBox="0 0 24 24" width="24" height="24">
                                 <path d="M8 5v14l11-7z"/>
                             </svg>
@@ -223,7 +223,7 @@ class LRP_Public {
                         </button>
                         
                         <div class="lrp-volume-control">
-                            <button class="lrp-volume-button" aria-label="<?php esc_attr_e( 'Volume', 'live-radio-player' ); ?>">
+                            <button type="button" class="lrp-volume-button" aria-label="<?php esc_attr_e( 'Volume', 'live-radio-player' ); ?>">
                                 <svg class="lrp-icon lrp-icon-volume" viewBox="0 0 24 24" width="20" height="20">
                                     <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
                                 </svg>
@@ -255,7 +255,7 @@ class LRP_Public {
                     
                     <?php if ( $atts['lyrics'] === 'on' && isset( $settings['show_lyrics'] ) && $settings['show_lyrics'] ) : ?>
                     <div class="lrp-lyrics-section">
-                        <button class="lrp-lyrics-toggle"><?php esc_html_e( 'Show Lyrics', 'live-radio-player' ); ?></button>
+                        <button type="button" class="lrp-lyrics-toggle"><?php esc_html_e( 'Show Lyrics', 'live-radio-player' ); ?></button>
                         <div class="lrp-lyrics-content" style="display:none;">
                             <div class="lrp-lyrics-text"></div>
                             <div class="lrp-lyrics-loader"></div>

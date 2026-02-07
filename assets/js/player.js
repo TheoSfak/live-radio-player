@@ -64,7 +64,14 @@
         attachEventListeners() {
             // Play/Pause button
             if (this.playButton) {
-                this.playButton.addEventListener('click', () => this.togglePlay());
+                this.playButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.togglePlay();
+                });
+                // Prevent focus scroll on mobile
+                this.playButton.addEventListener('focus', (e) => {
+                    e.target.blur();
+                });
             }
             
             // Volume controls
@@ -75,12 +82,22 @@
             }
             
             if (this.volumeButton) {
-                this.volumeButton.addEventListener('click', () => this.toggleMute());
+                this.volumeButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.toggleMute();
+                });
             }
             
             // Lyrics toggle
             if (this.lyricsToggle) {
-                this.lyricsToggle.addEventListener('click', () => this.toggleLyrics());
+                this.lyricsToggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.toggleLyrics();
+                });
+                // Prevent focus scroll on mobile
+                this.lyricsToggle.addEventListener('focus', (e) => {
+                    e.target.blur();
+                });
             }
             
             // Audio events
