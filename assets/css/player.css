@@ -55,6 +55,8 @@
     border: 1px solid rgba(255, 255, 255, 0.8);
     /* Prevent scroll anchor adjustments on mobile */
     overflow-anchor: none;
+    /* Prevent scroll chaining */
+    overscroll-behavior: contain;
 }
 
 .lrp-player::before {
@@ -791,6 +793,7 @@
     border-radius: 24px;
     max-height: 500px;
     overflow-y: auto;
+    overflow-x: hidden;
     border: 1px solid rgba(102, 126, 234, 0.15);
     backdrop-filter: blur(10px);
     animation: lrp-slideDown 0.4s ease;
@@ -798,6 +801,10 @@
     width: 100%;
     /* Prevent scroll anchor adjustments */
     overflow-anchor: none;
+    /* Prevent scroll chaining to parent/page */
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
 }
 
 .lrp-lyrics-content::-webkit-scrollbar {
