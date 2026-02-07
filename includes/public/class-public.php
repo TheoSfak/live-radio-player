@@ -103,10 +103,8 @@ class LRP_Public {
                 'streamFormat' => isset( $settings['stream_format'] ) ? sanitize_key( $settings['stream_format'] ) : 'mp3',
                 'enableLyrics' => isset( $settings['show_lyrics'] ) && $settings['show_lyrics'],
                 'forceReload' => isset( $settings['force_reload_on_change'] ) && $settings['force_reload_on_change'],
-                'enableKaraoke' => isset( $settings['enable_karaoke_lyrics'] ) && $settings['enable_karaoke_lyrics'],
                 'lyricsFontSize' => isset( $settings['lyrics_font_size'] ) ? absint( $settings['lyrics_font_size'] ) : 14,
-                'lyricsColor' => isset( $settings['lyrics_text_color'] ) ? sanitize_hex_color( $settings['lyrics_text_color'] ) : '#ffffff',
-                'lyricsActiveColor' => isset( $settings['lyrics_active_color'] ) ? sanitize_hex_color( $settings['lyrics_active_color'] ) : '#ffd700'
+                'lyricsColor' => isset( $settings['lyrics_text_color'] ) ? sanitize_hex_color( $settings['lyrics_text_color'] ) : '#ffffff'
             ) );
         }
     }

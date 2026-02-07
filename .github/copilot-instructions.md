@@ -1,8 +1,8 @@
 # Live Radio Player - AI Agent Instructions
 
-## Current Build Status (v1.3.3 - Milestone v1.0.0)
+## Current Build Status (v1.4.2)
 
-**Last Updated**: February 1, 2026  
+**Last Updated**: February 7, 2026  
 **Status**: ✅ Production-ready, fully tested and working  
 **Backup**: `c:\Users\theo\Desktop\liveonstage_player_backup_v1.0.0\`
 
@@ -39,35 +39,25 @@
 - **Fallback Images**: Admin-configurable default image
 - **API Endpoint**: `/wp-json/live-radio-player/v1/metadata` includes artwork_url
 
-#### 5. Triple Lyrics Provider System (With Karaoke)
-- **LRCLIB.net** (Primary): Synced LRC lyrics with timestamps for karaoke mode
-- **lyrics.ovh** (Secondary): International lyrics, plain text fallback
+#### 5. Triple Lyrics Provider System
+- **LRCLIB.net** (Primary): High quality lyrics database
+- **lyrics.ovh** (Secondary): International lyrics database
 - **GreekLyrics.gr** (Tertiary): Greek lyrics with transliteration/translation
-- **LRC Parsing**: Custom parser handles `[mm:ss.xx]` timestamps
-- **Karaoke Highlighting**: Real-time line highlighting using track start timestamp
-- **Live Radio Workaround**: Uses `Date.now() - trackStartTime` instead of `audio.currentTime`
 - **Automatic Fallback**: If one API fails, tries next in chain
 
-#### 6. Karaoke-Style Synced Lyrics
-- **Track Timestamp**: Records `Date.now()` when track changes
-- **Real-time Sync**: Calculates elapsed time without relying on audio.currentTime
-- **Active Line Highlighting**: CSS class `.lrp-lyrics-line-active` with color change
-- **Admin Toggle**: Enable/disable karaoke mode in Lyrics & Artwork tab
-- **Performance**: Uses `setInterval` (100ms) for smooth highlighting
-
-#### 7. 10-Tab Admin Panel (WordPress Settings API)
+#### 6. 10-Tab Admin Panel (WordPress Settings API)
 - **Stream Settings**: Server config, metadata fetching, debug mode
 - **Content Control**: Display element checkboxes (artist, title, album, artwork, listeners, status, lyrics)
 - **Player Layout**: Layout type, orientation, alignment, sticky player, Facebook URL
 - **Visual Style Builder**: Colors, typography, spacing (CSS custom properties)
 - **Theme Presets**: 4 predefined themes with override option
-- **Lyrics & Artwork**: Provider selection, karaoke enable, cache duration
+- **Lyrics & Artwork**: Provider selection, cache duration
 - **Performance**: Refresh interval (10s default), lazy loading, multi-player support
 - **Custom Code**: CSS/JS injection, disable plugin styles
 - **Integration**: Shortcode examples, usage instructions
 - **Diagnostics**: Real-time stream status, cache info, system details
 
-#### 8. Advanced Settings Save System
+#### 7. Advanced Settings Save System
 - **Tab Tracking**: Hidden field `_current_tab` identifies which tab was submitted
 - **Selective Updates**: Only checkboxes from current tab are modified
 - **Merge Strategy**: `get_option()` + merge prevents data loss from other tabs
@@ -84,12 +74,11 @@
 6. ✅ **Shoutcast Playback**: Auto-append `/;` or `,1` based on stream type
 7. ✅ **Artwork Missing**: Integrated iTunes API for automatic fetching
 8. ✅ **Artist/Title Parsing**: Enhanced regex to support both " - " and "-" formats
-9. ✅ **Karaoke on Live Radio**: Used track start timestamp instead of audio.currentTime
-10. ✅ **JavaScript Syntax Errors**: Cleaned up corrupted console.log statements (v1.3.1-1.3.3)
-11. ✅ **Duplicate Code**: Removed duplicate initialization logic
-12. ✅ **Missing Variables**: Added `const players = document.querySelectorAll('.lrp-player')`
-13. ✅ **Sticky Artwork**: Added `position: sticky` so artwork/Facebook don't move with lyrics
-14. ✅ **Facebook Spacing**: Increased margin-bottom to 50px
+9. ✅ **JavaScript Syntax Errors**: Cleaned up corrupted console.log statements (v1.3.1-1.3.3)
+10. ✅ **Duplicate Code**: Removed duplicate initialization logic
+11. ✅ **Missing Variables**: Added `const players = document.querySelectorAll('.lrp-player')`
+12. ✅ **Sticky Artwork**: Added `position: sticky` so artwork/Facebook don't move with lyrics
+13. ✅ **Facebook Spacing**: Increased margin-bottom to 50px
 
 ### Technical Architecture Details
 
@@ -126,10 +115,9 @@ $artwork_service = LRP_Artwork_Service::get_instance();
 class LiveRadioPlayer {
     constructor(element) {
         this.audio = element.querySelector('.lrp-audio-element');
-        this.trackStartTime = null;  // For karaoke sync
-        this.lyricsData = null;      // Parsed LRC data
+        this.trackStartTime = null;  // For track time display
         this.updateInterval = null;  // Metadata polling
-        this.lyricsSyncInterval = null;  // Karaoke highlighting
+        this.timeUpdateInterval = null;  // Track time updates
     }
     
     // XMLHttpRequest throughout (NOT fetch())
@@ -155,7 +143,6 @@ class LiveRadioPlayer {
 - Real-time metadata updates (10-second polling)
 - Artwork auto-fetching from iTunes
 - Lyrics fetching from all 3 providers
-- Karaoke highlighting with synced timestamps
 - Admin settings save/load (all tabs)
 - Checkbox persistence across tabs
 - Facebook button link navigation
@@ -171,7 +158,6 @@ class LiveRadioPlayer {
 
 #### ⚠️ Known Limitations (Not Bugs)
 - **Mixed Content**: HTTPS sites require HTTPS streams (browser security)
-- **Live Radio Karaoke**: Slight drift possible (uses system clock, not audio position)
 - **Lyrics Availability**: Not all tracks have lyrics in APIs
 - **Artwork Quality**: Depends on iTunes database coverage
 - **Theme fetch()**: Some themes hijack fetch() - we use XMLHttpRequest everywhere
@@ -179,10 +165,10 @@ class LiveRadioPlayer {
 ### File Structure & Key Files
 
 ```
-live-radio-player.php           # v1.3.3 bootstrap
+live-radio-player.php           # v1.4.2 bootstrap
 assets/
   css/player.css                # Spectacular styles (3-color gradients, sticky artwork)
-  js/player.js                  # Vanilla JS (XMLHttpRequest, karaoke engine)
+  js/player.js                  # Vanilla JS (XMLHttpRequest, plain lyrics)
 includes/
   class-stream-manager.php      # Provider orchestration, 10s cache default
   class-lyrics-service.php      # Triple API (LRCLIB → lyrics.ovh → GreekLyrics)
@@ -212,12 +198,12 @@ When making changes, remember:
 This is a WordPress plugin for live radio streaming (Icecast/Shoutcast). Key architectural pattern: **Provider-based stream abstraction** + **Singleton services** + **WordPress standards**.
 
 ### Core Components
-- **live-radio-player.php** - Bootstrap (v1.3.3), autoloader, singleton pattern
+- **live-radio-player.php** - Bootstrap (v1.4.2), autoloader, singleton pattern
 - **includes/class-stream-manager.php** - Central service orchestrating providers, caching (WordPress Transients)
 - **includes/providers/** - Stream-specific logic (`LRP_Stream_Provider_Interface`)
   - `class-icecast-provider.php` - JSON metadata parsing
   - `class-shoutcast-provider.php` - XML (v1) and JSON with SID (v2) parsing
-- **includes/class-lyrics-service.php** - Triple API integration: LRCLIB (synced/karaoke), lyrics.ovh (international), GreekLyrics.gr (Greek with transliteration)
+- **includes/class-lyrics-service.php** - Triple API integration: LRCLIB, lyrics.ovh (international), GreekLyrics.gr (Greek with transliteration)
 - **includes/class-artwork-service.php** - iTunes API artwork fetching (free, no keys)
 - **includes/class-rest-api.php** - REST endpoints (`/wp-json/live-radio-player/v1/metadata`, `/status`, `/lyrics`)
 - **includes/admin/class-admin.php** - 10-tab admin interface using Settings API
@@ -252,12 +238,12 @@ if ( isset( $tab_checkboxes[ $current_tab ] ) ) {
 ```
 **Why**: Prevents unchecked boxes from other tabs being reset when saving a different tab.
 
-### 3. Karaoke Mode for Live Radio
-Cannot use `audio.currentTime` (always 0 on live streams). Uses track start timestamp:
+### 3. Track Time Display
+Uses track start timestamp to display elapsed/remaining time:
 ```javascript
 // assets/js/player.js
 this.trackStartTime = Date.now();  // Set on track change
-const elapsed = Date.now() - this.trackStartTime;  // Calculate sync time
+const elapsed = Date.now() - this.trackStartTime;  // Calculate elapsed time
 ```
 
 ### 4. Cache Busting Strategy

@@ -1,25 +1,24 @@
 === Live Radio Player ===
 Contributors: theodorefakianakis
 Donate link: https://www.paypal.com/donate/?business=theodore.sfakianakis@gmail.com&currency_code=EUR
-Tags: radio, streaming, icecast, shoutcast, player, audio, live stream, karaoke, lyrics
+Tags: radio, streaming, icecast, shoutcast, player, audio, live stream, lyrics
 Requires at least: 5.8
 Tested up to: 6.7
-Stable tag: 1.4.0
+Stable tag: 1.4.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Production-ready live radio streaming plugin with spectacular UI, karaoke-style synced lyrics, track time display, and comprehensive admin panel supporting Icecast and Shoutcast.
+Production-ready live radio streaming plugin with spectacular UI, lyrics display, track time display, and comprehensive admin panel supporting Icecast and Shoutcast.
 
 == Description ==
 
-Live Radio Player is a professional WordPress plugin for adding live radio streaming to your website. It supports both Icecast and Shoutcast streaming servers and provides a spectacular player with 3-color gradient animations, karaoke-style synced lyrics, and an extensive 10-tab admin panel.
+Live Radio Player is a professional WordPress plugin for adding live radio streaming to your website. It supports both Icecast and Shoutcast streaming servers and provides a spectacular player with 3-color gradient animations, lyrics display, and an extensive 10-tab admin panel.
 
 = ✨ Key Features =
 
 * **Multiple Stream Support**: Icecast, Shoutcast v1, and Shoutcast v2
 * **Spectacular UI**: Rotating 3-color gradients, glassmorphism, pulse animations
-* **Karaoke Mode**: Real-time synced lyrics with line highlighting
 * **Triple Lyrics System**: LRCLIB.net → lyrics.ovh → GreekLyrics.gr fallback chain
 * **Auto Artwork**: iTunes API integration (free, no keys required)
 * **Facebook Button**: Beautiful gradient button with admin URL setting
@@ -54,7 +53,7 @@ Live Radio Player is a professional WordPress plugin for adding live radio strea
 
 The plugin includes a triple lyrics provider system with automatic fallback:
 
-1. **LRCLIB.net** (Primary) - Synced LRC lyrics with timestamps for karaoke mode
+1. **LRCLIB.net** (Primary) - High quality lyrics database
 2. **lyrics.ovh** (Secondary) - International lyrics database
 3. **GreekLyrics.gr** (Tertiary) - Greek lyrics with transliteration
 
@@ -76,7 +75,7 @@ Customize colors, typography, borders, shadows, padding, and spacing without wri
 Select from 4 predefined themes or override with custom settings.
 
 **Tab 6 - Lyrics & Artwork**
-Configure lyrics providers, karaoke mode, artwork sources, and cache duration.
+Configure lyrics providers, artwork sources, and cache duration.
 
 **Tab 7 - Performance**
 Manage refresh interval (10s default), lazy loading, cache settings, and multi-player support.
@@ -179,10 +178,6 @@ Live Radio Player supports Icecast and Shoutcast (v1 and v2) streaming servers.
 
 No! The plugin works without any API keys. All features including lyrics and artwork use free public APIs that don't require registration.
 
-= How does karaoke mode work? =
-
-When synced lyrics are available from LRCLIB.net, the plugin will highlight each line in real-time as the song plays. This works with live radio by tracking the time since the track started.
-
 = Can I customize the player appearance? =
 
 Yes! The plugin includes 4 theme presets and a comprehensive Visual Style Builder for customizing colors, typography, layout, and more without writing any CSS.
@@ -242,13 +237,19 @@ Artwork is automatically fetched from the iTunes Search API based on the artist 
 3. Admin Panel - Visual Style Builder with color pickers
 4. Admin Panel - Theme Presets with live previews
 5. Admin Panel - Diagnostics showing real-time stream status
-6. Frontend player - Dark Night theme with karaoke lyrics
+6. Frontend player - Dark Night theme with lyrics
 7. Gutenberg block in block editor
 8. Frontend player - Minimal layout for sidebar
 9. Facebook button integration
-10. Lyrics display with karaoke highlighting
+10. Lyrics display
 
 == Changelog ==
+
+= 1.4.2 - 2026-02-07 =
+* Removed karaoke feature (caused auto-scroll issues)
+* Simplified lyrics display (plain text only)
+* Removed karaoke-related admin settings
+* Improved page scroll stability
 
 = 1.4.0 - 2026-02-07 =
 * NEW: Track time display showing elapsed and remaining time
@@ -273,7 +274,6 @@ Artwork is automatically fetched from the iTunes Search API based on the artist 
 = 1.3.1 - 2026-02-03 =
 * Enhanced artist/title parsing with better regex
 * Fixed Shoutcast playback suffix handling
-* Improved karaoke sync accuracy
 
 = 1.0.0 - 2026-02-01 =
 * Initial release
@@ -283,7 +283,6 @@ Artwork is automatically fetched from the iTunes Search API based on the artist 
 * Visual Style Builder
 * Multiple layout options (Minimal, Card, Full, Sidebar)
 * Triple lyrics provider system (LRCLIB, lyrics.ovh, GreekLyrics)
-* Karaoke mode with synced lyrics
 * iTunes artwork auto-fetching
 * REST API endpoints
 * Gutenberg block support

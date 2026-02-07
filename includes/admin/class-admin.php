@@ -1062,20 +1062,6 @@ class LRP_Admin {
                 
                 <tr>
                     <th scope="row">
-                        <label for="enable_karaoke_lyrics"><?php esc_html_e( 'Karaoke Mode', 'live-radio-player' ); ?></label>
-                    </th>
-                    <td>
-                        <label>
-                            <input type="checkbox" name="<?php echo esc_attr( $this->option_name ); ?>[enable_karaoke_lyrics]" 
-                                   id="enable_karaoke_lyrics" value="1" <?php checked( $settings['enable_karaoke_lyrics'] ?? true, true ); ?> />
-                            <?php esc_html_e( 'Enable synchronized lyrics (highlights current line in real-time)', 'live-radio-player' ); ?>
-                        </label>
-                        <p class="description"><?php esc_html_e( 'When available, lyrics will sync with audio playback like karaoke.', 'live-radio-player' ); ?></p>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <th scope="row">
                         <label for="lyrics_source"><?php esc_html_e( 'Lyrics Source', 'live-radio-player' ); ?></label>
                     </th>
                     <td>
@@ -1109,18 +1095,6 @@ class LRP_Admin {
                                id="lyrics_text_color" value="<?php echo esc_attr( $settings['lyrics_text_color'] ?? '#ffffff' ); ?>" 
                                class="lrp-color-picker" />
                         <p class="description"><?php esc_html_e( 'Color for inactive lyrics lines (default: white)', 'live-radio-player' ); ?></p>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <th scope="row">
-                        <label for="lyrics_active_color"><?php esc_html_e( 'Active Line Color (Karaoke)', 'live-radio-player' ); ?></label>
-                    </th>
-                    <td>
-                        <input type="text" name="<?php echo esc_attr( $this->option_name ); ?>[lyrics_active_color]" 
-                               id="lyrics_active_color" value="<?php echo esc_attr( $settings['lyrics_active_color'] ?? '#ffd700' ); ?>" 
-                               class="lrp-color-picker" />
-                        <p class="description"><?php esc_html_e( 'Color for currently playing line in karaoke mode (default: gold)', 'live-radio-player' ); ?></p>
                     </td>
                 </tr>
                 
@@ -1561,7 +1535,7 @@ class LRP_Admin {
             'player_layout' => array( 'sticky_player' ),
             'visual_style' => array( 'nowplaying_underline' ),
             'theme_presets' => array( 'override_preset' ),
-            'lyrics_artwork' => array( 'enable_lyrics', 'enable_karaoke_lyrics', 'enable_external_artwork' ),
+            'lyrics_artwork' => array( 'enable_lyrics', 'enable_external_artwork' ),
             'performance' => array( 'lazy_load', 'allow_multiple_players', 'force_reload_on_change' ),
             'custom_code' => array( 'disable_plugin_css', 'disable_plugin_js' )
         );

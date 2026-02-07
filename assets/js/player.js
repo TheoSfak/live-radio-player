@@ -22,11 +22,9 @@
             this.isPlaying = false;
             this.currentTrack = null;
             this.updateInterval = null;
-            this.lyricsSyncInterval = null;
             this.timeUpdateInterval = null;
             this.trackStartTime = null;
             this.trackDuration = 0;
-            this.lyricsData = null;
             
             this.init();
         }
@@ -500,14 +498,11 @@
                     try {
                         const data = JSON.parse(xhr.responseText);
                         console.log('[LRP Debug] Parsed lyrics data:', data);
-                        console.log('[LRP Debug] enableKaraoke config:', lrpConfig.enableKaraoke);
-                        console.log('[LRP Debug] Has synced_lyrics:', !!data.data.synced_lyrics);
-                        console.log('[LRP Debug] is_synced flag:', data.data.is_synced);
                         
                         if (data.success && data.data.lyrics) {
                             console.log('[LRP Debug] Lyrics found, length:', data.data.lyrics.length);
                             
-                            // Display plain text lyrics only (karaoke disabled)
+                            // Display plain text lyrics
                             lyricsText.textContent = data.data.lyrics;
                         } else {
                             console.log('[LRP Debug] No lyrics in response, showing message:', data.data.message);
@@ -530,160 +525,6 @@
             };
             
             xhr.send();
-        }
-        
-        /**
-         * Display synced LRC lyrics with karaoke-style highlighting
-         * LRC format: [mm:ss.xx]Line of lyrics
-         */
-        displaySyncedLyrics(lrcContent, container) {
-            console.log('[LRP Debug] Parsing LRC content, length:', lrcContent.length);
-            
-            // Parse LRC format into structured data
-            const lines = lrcContent.split('\n');
-            const lyricsData = [];
-            
-            lines.forEach(line => {
-                // Match LRC timestamp format [mm:ss.xx] or [mm:ss]
-                const match = line.match(/\[(\d{2}):(\d{2})(?:\.(\d{2,3}))?\](.*)/);
-                if (match) {
-                    const minutes = parseInt(match[1], 10);
-                    const seconds = parseInt(match[2], 10);
-                    const centiseconds = match[3] ? parseInt(match[3].padEnd(3, '0'), 10) : 0;
-                    const text = match[4].trim();
-                    
-                    if (text) { // Skip empty lines
-                        const timeInMs = (minutes * 60 + seconds) * 1000 + centiseconds;
-                        lyricsData.push({ time: timeInMs, text: text });
-                    }
-                }
-            });
-            
-            console.log('[LRP Debug] Parsed', lyricsData.length, 'synced lyrics lines');
-            
-            if (lyricsData.length === 0) {
-                container.textContent = 'Synced lyrics format error';
-                return;
-            }
-            
-            // Sort by time (should already be sorted, but just in case)
-            lyricsData.sort((a, b) => a.time - b.time);
-            
-            // Clear container and add karaoke class
-            container.innerHTML = '';
-            container.classList.add('lrp-karaoke-lyrics');
-            
-            // Create line elements
-            lyricsData.forEach((item, index) => {
-                const lineDiv = document.createElement('div');
-                lineDiv.className = 'lrp-lyrics-line';
-                lineDiv.textContent = item.text;
-                lineDiv.dataset.time = item.time;
-                lineDiv.dataset.index = index;
-                container.appendChild(lineDiv);
-            });
-            
-            // Store lyrics data and start syncing
-            this.lyricsData = lyricsData;
-            
-            // If track already started, begin sync immediately
-            if (this.trackStartTime && this.isPlaying) {
-                console.log('[LRP Debug] Starting karaoke sync immediately');
-                this.startLyricsSync();
-            } else {
-                console.log('[LRP Debug] Waiting for playback to start karaoke sync');
-            }
-        }
-        
-        /**
-         * Start synchronizing lyrics with track playback
-         * For live radio, we calculate elapsed time from when track started
-         */
-        startLyricsSync() {
-            // Clear any existing sync interval
-            if (this.lyricsSyncInterval) {
-                clearInterval(this.lyricsSyncInterval);
-            }
-            
-            if (!this.lyricsData || this.lyricsData.length === 0) {
-                console.log('[LRP Debug] No lyrics data to sync');
-                return;
-            }
-            
-            if (!this.trackStartTime) {
-                console.log('[LRP Debug] No track start time set');
-                return;
-            }
-            
-            const container = this.lyricsContent.querySelector('.lrp-lyrics-text');
-            if (!container) {
-                console.log('[LRP Debug] No lyrics container found');
-                return;
-            }
-            
-            console.log('[LRP Debug] Karaoke sync started with', this.lyricsData.length, 'lines');
-            
-            let currentLineIndex = -1;
-            
-            this.lyricsSyncInterval = setInterval(() => {
-                if (!this.isPlaying || !this.trackStartTime) {
-                    return;
-                }
-                
-                // Calculate elapsed time since track started (in milliseconds)
-                const elapsedTime = Date.now() - this.trackStartTime;
-                
-                // Find the current line based on elapsed time
-                let newLineIndex = -1;
-                for (let i = this.lyricsData.length - 1; i >= 0; i--) {
-                    if (elapsedTime >= this.lyricsData[i].time) {
-                        newLineIndex = i;
-                        break;
-                    }
-                }
-                
-                // Update highlighting if line changed
-                if (newLineIndex !== currentLineIndex && newLineIndex >= 0) {
-                    console.log('[LRP Debug] Highlighting line', newLineIndex, 'at elapsed time', elapsedTime + 'ms');
-                    currentLineIndex = newLineIndex;
-                    
-                    // Remove active class from all lines
-                    const allLines = container.querySelectorAll('.lrp-lyrics-line');
-                    allLines.forEach(line => {
-                        line.classList.remove('lrp-active-line');
-                        line.style.color = lrpConfig.lyricsColor || '#ffffff';
-                        line.style.fontWeight = 'normal';
-                        line.style.fontSize = '';
-                    });
-                    
-                    // Highlight current line
-                    const activeLine = container.querySelector(`[data-index="${currentLineIndex}"]`);
-                    if (activeLine) {
-                        activeLine.classList.add('lrp-active-line');
-                        activeLine.style.color = lrpConfig.lyricsActiveColor || '#ffd700';
-                        activeLine.style.fontWeight = 'bold';
-                        activeLine.style.fontSize = '1.2em';
-                        
-                        // Scroll within lyrics container only (don't affect page scroll)
-                        const containerRect = container.getBoundingClientRect();
-                        const lineRect = activeLine.getBoundingClientRect();
-                        
-                        if (lineRect.top < containerRect.top || lineRect.bottom > containerRect.bottom) {
-                            container.scrollTop = activeLine.offsetTop - container.offsetTop - (container.clientHeight / 2) + (activeLine.clientHeight / 2);
-                        }
-                    }
-                }
-            }, 100); // Check every 100ms for smooth synchronization
-        }
-        
-        /**
-         * Stop lyrics synchronization
-         */
-        stopLyricsSync() {
-            if (this.lyricsSyncInterval) {
-                clearInterval(this.lyricsSyncInterval);
-                this.lyricsSyncInterval = null;
-            }
         }
         
         destroy() {

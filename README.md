@@ -5,7 +5,7 @@
 [![WordPress Version](https://img.shields.io/badge/wordpress-%3E%3D5.8-21759B.svg)](https://wordpress.org/)
 [![License](https://img.shields.io/badge/license-GPLv2-green.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
-A production-ready WordPress plugin for live radio streaming supporting Icecast and Shoutcast, featuring spectacular 3-color gradient animations, karaoke-style synced lyrics, and a comprehensive 10-tab admin panel.
+A production-ready WordPress plugin for live radio streaming supporting Icecast and Shoutcast, featuring spectacular 3-color gradient animations, lyrics display, and a comprehensive 10-tab admin panel.
 
 ## ☕ Support Development
 
@@ -32,10 +32,9 @@ If you find this plugin useful, please consider supporting its development:
 - **Sticky Artwork** - Doesn't move when lyrics expand
 
 ### 🎤 Triple Lyrics Provider System
-- **LRCLIB.net** (Primary) - Synced LRC lyrics with timestamps for karaoke mode
-- **lyrics.ovh** (Secondary) - International lyrics, plain text fallback
+- **LRCLIB.net** (Primary) - High quality lyrics database
+- **lyrics.ovh** (Secondary) - International lyrics
 - **GreekLyrics.gr** (Tertiary) - Greek lyrics with transliteration/translation
-- **Karaoke Highlighting** - Real-time line highlighting using track timestamps
 - **Automatic Fallback** - If one API fails, tries next in chain
 
 ### 🖼️ Auto Artwork Fetching
@@ -61,7 +60,7 @@ If you find this plugin useful, please consider supporting its development:
 3. **Player Layout** - Layout type, orientation, alignment, sticky player
 4. **Visual Style Builder** - Colors, typography, spacing
 5. **Theme Presets** - 4 predefined themes with override option
-6. **Lyrics & Artwork** - Provider selection, karaoke enable, cache duration
+6. **Lyrics & Artwork** - Provider selection, cache duration
 7. **Performance** - Refresh interval, lazy loading, multi-player support
 8. **Custom Code** - CSS/JS injection
 9. **Integration** - Shortcode examples, usage instructions
@@ -158,8 +157,7 @@ array(
 class LiveRadioPlayer {
     constructor(element) {
         this.audio = element.querySelector('.lrp-audio-element');
-        this.trackStartTime = null;  // For karaoke sync
-        this.lyricsData = null;      // Parsed LRC data
+        this.trackStartTime = null;  // For track time sync
     }
 }
 ```
@@ -200,6 +198,12 @@ class LiveRadioPlayer {
 
 ## 📝 Changelog
 
+### 1.4.2 (2026-02-07)
+- Removed karaoke feature (caused auto-scroll issues)
+- Simplified lyrics display (plain text only)
+- Removed karaoke-related admin settings
+- Improved page scroll stability
+
 ### 1.4.0 (2026-02-07)
 - **NEW**: Track time display (elapsed / remaining)
 - Track duration fetched from iTunes API
@@ -218,7 +222,6 @@ class LiveRadioPlayer {
 - 10-tab admin panel
 - 4 theme presets
 - Triple lyrics provider system
-- Karaoke mode
 - iTunes artwork fetching
 - REST API endpoints
 - Gutenberg block

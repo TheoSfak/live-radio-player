@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Live Radio Player
  * Plugin URI: https://github.com/TheoSfak/live-radio-player
- * Description: Production-ready live radio streaming plugin supporting Icecast and Shoutcast with spectacular UI, karaoke lyrics, and 10-tab admin panel
- * Version: 1.4.1
+ * Description: Production-ready live radio streaming plugin supporting Icecast and Shoutcast with spectacular UI, lyrics display, and 10-tab admin panel
+ * Version: 1.4.2
  * Requires at least: 5.8
  * Requires PHP: 7.4
  * Author: Theodore Sfakianakis
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants
-define( 'LRP_VERSION', '1.4.1' );
+define( 'LRP_VERSION', '1.4.2' );
 define( 'LRP_PLUGIN_FILE', __FILE__ );
 define( 'LRP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'LRP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
