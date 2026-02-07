@@ -48,15 +48,10 @@
     width: 100%;
     box-sizing: border-box;
     position: relative;
-    overflow-x: hidden;
-    overflow-y: visible;
+    overflow: hidden;
     backdrop-filter: blur(20px);
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(255, 255, 255, 0.8);
-    /* Prevent scroll anchor adjustments on mobile */
-    overflow-anchor: none;
-    /* Prevent scroll chaining */
-    overscroll-behavior: contain;
 }
 
 .lrp-player::before {

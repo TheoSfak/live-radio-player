@@ -438,6 +438,10 @@
         toggleLyrics() {
             if (!this.lyricsContent) return;
             
+            // Save current scroll position
+            const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            
             const isVisible = this.lyricsContent.style.display !== 'none';
             
             if (isVisible) {
@@ -447,6 +451,11 @@
                 this.lyricsContent.style.display = 'block';
                 this.lyricsToggle.textContent = 'Hide Lyrics';
             }
+            
+            // Restore scroll position after DOM update
+            requestAnimationFrame(() => {
+                window.scrollTo(scrollX, scrollY);
+            });
         }
         
         loadLyrics(artist, title) {
