@@ -99,20 +99,29 @@ class LRP_REST_API {
         $stream_manager = LRP_Stream_Manager::get_instance();
         $metadata = $stream_manager->get_metadata( $force_refresh );
         
-        // Fetch artwork if artist and title are available
+        // Fetch artwork and duration if artist and title are available
         $settings = get_option( 'lrp_settings', array() );
+        $show_track_time = isset( $settings['show_track_time'] ) && $settings['show_track_time'];
+        
         if ( ! empty( $metadata['artist'] ) && ! empty( $metadata['title'] ) ) {
             $artwork_size = isset( $settings['artwork_size'] ) ? $settings['artwork_size'] : 'medium';
-            $artwork_url = LRP_Artwork_Service::get_artwork( 
+            
+            // Use get_track_info for both artwork and duration
+            $track_info = LRP_Artwork_Service::get_track_info( 
                 $metadata['artist'], 
                 $metadata['title'], 
                 $artwork_size 
             );
             
-            if ( $artwork_url ) {
-                $metadata['artwork_url'] = $artwork_url;
+            if ( $track_info['artwork_url'] ) {
+                $metadata['artwork_url'] = $track_info['artwork_url'];
             } elseif ( ! empty( $settings['fallback_image'] ) ) {
                 $metadata['artwork_url'] = esc_url_raw( $settings['fallback_image'] );
+            }
+            
+            // Include duration if track time display is enabled
+            if ( $show_track_time && $track_info['duration_ms'] > 0 ) {
+                $metadata['duration_ms'] = $track_info['duration_ms'];
             }
         } elseif ( ! empty( $settings['fallback_image'] ) ) {
             $metadata['artwork_url'] = esc_url_raw( $settings['fallback_image'] );
@@ -129,6 +138,7 @@ class LRP_REST_API {
                 'show_listeners' => isset( $settings['show_listeners'] ) ? $settings['show_listeners'] : true,
                 'show_status' => isset( $settings['show_status'] ) ? $settings['show_status'] : true,
                 'show_lyrics' => isset( $settings['show_lyrics'] ) ? $settings['show_lyrics'] : false,
+                'show_track_time' => isset( $settings['show_track_time'] ) ? $settings['show_track_time'] : false,
                 'fallback_text' => isset( $settings['fallback_text'] ) ? $settings['fallback_text'] : '',
                 'fallback_image' => isset( $settings['fallback_image'] ) ? $settings['fallback_image'] : ''
             )

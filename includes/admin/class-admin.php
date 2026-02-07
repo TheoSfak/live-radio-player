@@ -375,6 +375,12 @@ class LRP_Admin {
                             </label><br />
                             
                             <label>
+                                <input type="checkbox" name="<?php echo esc_attr( $this->option_name ); ?>[show_track_time]" 
+                                       value="1" <?php checked( $settings['show_track_time'] ?? false, true ); ?> />
+                                <?php esc_html_e( 'Show Track Time (elapsed / remaining)', 'live-radio-player' ); ?>
+                            </label><br />
+                            
+                            <label>
                                 <input type="checkbox" name="<?php echo esc_attr( $this->option_name ); ?>[show_status]" 
                                        value="1" <?php checked( $settings['show_status'] ?? true, true ); ?> />
                                 <?php esc_html_e( 'Show Stream Status (Online / Offline)', 'live-radio-player' ); ?>
@@ -1549,7 +1555,7 @@ class LRP_Admin {
         // Define checkboxes by tab
         $tab_checkboxes = array(
             'content_control' => array( 'show_artist', 'show_title', 'show_album', 'show_artwork', 
-                                       'show_listeners', 'show_status', 'show_nowplaying_label', 
+                                       'show_listeners', 'show_track_time', 'show_status', 'show_nowplaying_label', 
                                        'show_station_name', 'show_lyrics' ),
             'stream_settings' => array( 'enable_metadata_fetch', 'debug_mode' ),
             'player_layout' => array( 'sticky_player' ),

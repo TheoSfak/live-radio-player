@@ -4,12 +4,12 @@ Donate link: https://www.paypal.com/donate/?business=theodore.sfakianakis@gmail.
 Tags: radio, streaming, icecast, shoutcast, player, audio, live stream, karaoke, lyrics
 Requires at least: 5.8
 Tested up to: 6.7
-Stable tag: 1.3.3
+Stable tag: 1.4.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Production-ready live radio streaming plugin with spectacular UI, karaoke-style synced lyrics, and comprehensive admin panel supporting Icecast and Shoutcast.
+Production-ready live radio streaming plugin with spectacular UI, karaoke-style synced lyrics, track time display, and comprehensive admin panel supporting Icecast and Shoutcast.
 
 == Description ==
 
@@ -249,6 +249,13 @@ Artwork is automatically fetched from the iTunes Search API based on the artist 
 10. Lyrics display with karaoke highlighting
 
 == Changelog ==
+
+= 1.4.0 - 2026-02-07 =
+* NEW: Track time display showing elapsed and remaining time
+* Track duration fetched from iTunes API
+* Monospace font for clean time display
+* Theme-specific styling for time display
+* Admin setting in Content Control tab to enable/disable
 
 = 1.3.3 - 2026-02-07 =
 * Added Facebook button integration with gradient design

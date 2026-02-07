@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name: Live Radio Player
- * Plugin URI: https://github.com/theodorefakianakis/live-radio-player
+ * Plugin URI: https://github.com/TheoSfak/live-radio-player
  * Description: Production-ready live radio streaming plugin supporting Icecast and Shoutcast with spectacular UI, karaoke lyrics, and 10-tab admin panel
- * Version: 1.3.3
+ * Version: 1.4.0
  * Requires at least: 5.8
  * Requires PHP: 7.4
  * Author: Theodore Sfakianakis
- * Author URI: https://github.com/theodorefakianakis
+ * Author URI: https://github.com/TheoSfak
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: live-radio-player
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define plugin constants
-define( 'LRP_VERSION', '1.3.3' );
+define( 'LRP_VERSION', '1.4.0' );
 define( 'LRP_PLUGIN_FILE', __FILE__ );
 define( 'LRP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'LRP_PLUGIN_URL', plugin_dir_url( __FILE__ ) );

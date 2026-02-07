@@ -232,6 +232,17 @@ class LRP_Public {
                         </div>
                     </div>
                     
+                    <?php if ( isset( $settings['show_track_time'] ) && $settings['show_track_time'] ) : ?>
+                    <div class="lrp-track-time">
+                        <svg class="lrp-icon" viewBox="0 0 24 24" width="16" height="16">
+                            <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                        </svg>
+                        <span class="lrp-time-elapsed">0:00</span>
+                        <span class="lrp-time-separator">/</span>
+                        <span class="lrp-time-remaining">-0:00</span>
+                    </div>
+                    <?php endif; ?>
+                    
                     <?php if ( isset( $settings['show_listeners'] ) && $settings['show_listeners'] ) : ?>
                     <div class="lrp-listeners">
                         <svg class="lrp-icon" viewBox="0 0 24 24" width="16" height="16">

@@ -23,7 +23,9 @@
             this.currentTrack = null;
             this.updateInterval = null;
             this.lyricsSyncInterval = null;
+            this.timeUpdateInterval = null;
             this.trackStartTime = null;
+            this.trackDuration = 0;
             this.lyricsData = null;
             
             this.init();
@@ -317,6 +319,12 @@
                 this.onTrackChange(metadata);
                 this.currentTrack = newTrack;
             }
+            
+            // Update track time display
+            if (display.show_track_time && metadata.duration_ms) {
+                this.trackDuration = metadata.duration_ms;
+                this.startTrackTimeUpdates();
+            }
         }
         
         updateStatus(status) {
@@ -337,6 +345,10 @@
             console.log('[LRP Debug] Track changed:', metadata);
             console.log('[LRP Debug] forceReload:', lrpConfig.forceReload, 'enableLyrics:', lrpConfig.enableLyrics);
             
+            // Reset track start time for new track
+            this.trackStartTime = Date.now();
+            this.trackDuration = metadata.duration_ms || 0;
+            
             // Reload stream if configured
             if (lrpConfig.forceReload && this.isPlaying) {
                 console.log('[LRP Debug] Reloading stream due to track change');
@@ -349,6 +361,63 @@
                 console.log('[LRP Debug] Loading lyrics for track change');
                 this.loadLyrics(metadata.artist, metadata.title);
             }
+        }
+        
+        /**
+         * Start track time updates
+         */
+        startTrackTimeUpdates() {
+            // Clear any existing interval
+            if (this.timeUpdateInterval) {
+                clearInterval(this.timeUpdateInterval);
+            }
+            
+            // Update immediately
+            this.updateTrackTime();
+            
+            // Update every second
+            this.timeUpdateInterval = setInterval(() => {
+                this.updateTrackTime();
+            }, 1000);
+        }
+        
+        /**
+         * Update track time display
+         */
+        updateTrackTime() {
+            const elapsedEl = this.element.querySelector('.lrp-time-elapsed');
+            const remainingEl = this.element.querySelector('.lrp-time-remaining');
+            
+            if (!elapsedEl || !remainingEl || !this.trackStartTime) return;
+            
+            const now = Date.now();
+            const elapsedMs = now - this.trackStartTime;
+            
+            // Format elapsed time
+            elapsedEl.textContent = this.formatTime(elapsedMs);
+            
+            // Calculate and format remaining time
+            if (this.trackDuration > 0) {
+                const remainingMs = Math.max(0, this.trackDuration - elapsedMs);
+                remainingEl.textContent = '-' + this.formatTime(remainingMs);
+                
+                // If track should have ended, stop updating (wait for next metadata)
+                if (remainingMs <= 0) {
+                    remainingEl.textContent = '-0:00';
+                }
+            } else {
+                remainingEl.textContent = '--:--';
+            }
+        }
+        
+        /**
+         * Format milliseconds to mm:ss
+         */
+        formatTime(ms) {
+            const totalSeconds = Math.floor(ms / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
         }
         
         toggleLyrics() {

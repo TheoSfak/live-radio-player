@@ -44,6 +44,12 @@ If you find this plugin useful, please consider supporting its development:
 - **24hr Cache** - Stored in WordPress Transients
 - **Fallback Images** - Admin-configurable default image
 
+### ⏱️ Track Time Display
+- **Elapsed Time** - Shows how long the current track has been playing
+- **Remaining Time** - Countdown showing time until track ends
+- **iTunes Duration** - Fetches accurate track duration from iTunes API
+- **Monospace Font** - Clean, readable time display
+
 ### 📱 Facebook Integration
 - **Beautiful Gradient Button** - Blue gradient with pulse animation
 - **Admin Setting** - URL field in Player Layout tab
@@ -51,7 +57,7 @@ If you find this plugin useful, please consider supporting its development:
 
 ### ⚙️ 10-Tab Admin Panel
 1. **Stream Settings** - Server config, metadata fetching, debug mode
-2. **Content Control** - Display element toggles
+2. **Content Control** - Display element toggles (including track time)
 3. **Player Layout** - Layout type, orientation, alignment, sticky player
 4. **Visual Style Builder** - Colors, typography, spacing
 5. **Theme Presets** - 4 predefined themes with override option
@@ -193,6 +199,13 @@ class LiveRadioPlayer {
 3. Some tracks may not have lyrics available
 
 ## 📝 Changelog
+
+### 1.4.0 (2026-02-07)
+- **NEW**: Track time display (elapsed / remaining)
+- Track duration fetched from iTunes API
+- Monospace font for time display
+- Theme-specific time styling
+- Admin setting to enable/disable track time
 
 ### 1.3.3 (2026-02-07)
 - Facebook button integration
