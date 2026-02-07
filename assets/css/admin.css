@@ -1,0 +1,340 @@
+/**
+ * Admin Panel Styles
+ * Styles for the tabbed admin interface
+ */
+
+/* Admin Wrapper */
+.lrp-admin-wrap {
+    margin: 20px 20px 0 0;
+}
+
+/* Navigation Tabs */
+.lrp-nav-tabs {
+    margin-bottom: 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.lrp-nav-tabs .nav-tab {
+    font-size: 13px;
+    padding: 8px 12px;
+}
+
+/* Tab Content */
+.lrp-tab-content {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-top: none;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+}
+
+.lrp-tab-content h2 {
+    margin-top: 0;
+}
+
+.lrp-tab-content h3 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+
+/* Form Tables */
+.lrp-admin-form .form-table {
+    margin-top: 0;
+}
+
+.lrp-admin-form .form-table th {
+    width: 250px;
+    padding: 15px 10px 15px 0;
+}
+
+.lrp-admin-form .form-table td {
+    padding: 15px 10px;
+}
+
+/* Conditional Fields */
+.lrp-icecast-only,
+.lrp-shoutcast-only {
+    display: none;
+}
+
+/* Color Picker */
+.lrp-color-picker {
+    max-width: 100px;
+}
+
+/* Slider Values */
+.lrp-slider-value {
+    display: inline-block;
+    margin-left: 10px;
+    font-weight: 600;
+    min-width: 50px;
+}
+
+/* Image Preview */
+.lrp-image-preview {
+    margin-top: 10px;
+}
+
+.lrp-image-preview img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+/* Upload Button */
+.lrp-upload-image {
+    margin-left: 10px;
+}
+
+/* Disabled Fields */
+.lrp-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Theme Previews */
+.lrp-theme-previews {
+    margin-top: 20px;
+}
+
+.lrp-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.lrp-preview-item {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.lrp-preview-item:hover {
+    transform: translateY(-5px);
+}
+
+.lrp-preview-item.active .lrp-preview-box {
+    border: 3px solid #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+}
+
+.lrp-preview-box {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.lrp-theme-classic {
+    background: #f5f5f5;
+    color: #d32f2f;
+}
+
+.lrp-theme-modern {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.lrp-theme-dark {
+    background: #1a1a1a;
+    color: #bb86fc;
+}
+
+.lrp-theme-minimal {
+    background: #fafafa;
+    color: #424242;
+    border: 1px solid #e0e0e0;
+}
+
+/* Code Block */
+.lrp-code-block {
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    overflow-x: auto;
+}
+
+.lrp-code-block code {
+    background: none;
+    padding: 0;
+}
+
+/* Parameter List */
+.lrp-param-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.lrp-param-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.lrp-param-list li:last-child {
+    border-bottom: none;
+}
+
+.lrp-param-list code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+/* Diagnostics Grid */
+.lrp-diagnostics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.lrp-diag-box {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.lrp-diag-box h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 15px;
+    border-bottom: 2px solid #2271b1;
+    padding-bottom: 10px;
+}
+
+.lrp-diag-box .widefat {
+    border: none;
+    box-shadow: none;
+}
+
+.lrp-diag-box .widefat td {
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.lrp-diag-box .widefat tr:last-child td {
+    border-bottom: none;
+}
+
+/* Status Badges */
+.lrp-status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.lrp-status-online {
+    background: #d4edda;
+    color: #155724;
+}
+
+.lrp-status-offline {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Cache Message */
+#lrp-cache-message {
+    margin-top: 10px;
+}
+
+#lrp-cache-message .notice {
+    padding: 8px 12px;
+}
+
+/* Notices */
+.lrp-tab-content .notice {
+    margin: 15px 0;
+}
+
+/* Responsive */
+@media (max-width: 782px) {
+    .lrp-admin-wrap {
+        margin-right: 10px;
+    }
+    
+    .lrp-admin-form .form-table th {
+        width: auto;
+        padding: 10px 0;
+    }
+    
+    .lrp-preview-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+    
+    .lrp-diagnostics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* WordPress Admin Overrides */
+.lrp-admin-wrap .form-table input[type="text"],
+.lrp-admin-wrap .form-table input[type="url"],
+.lrp-admin-wrap .form-table input[type="number"],
+.lrp-admin-wrap .form-table select,
+.lrp-admin-wrap .form-table textarea {
+    width: 100%;
+    max-width: 400px;
+}
+
+.lrp-admin-wrap .form-table input[type="checkbox"],
+.lrp-admin-wrap .form-table input[type="radio"] {
+    width: auto;
+}
+
+.lrp-admin-wrap .form-table textarea {
+    height: 120px;
+}
+
+.lrp-admin-wrap .form-table textarea.large-text.code {
+    max-width: 600px;
+    font-family: monospace;
+}
+
+/* Help Text */
+.lrp-admin-wrap .description {
+    color: #646970;
+    font-style: normal;
+}
+
+/* Loading States */
+.lrp-loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Success/Error Messages */
+.lrp-message {
+    padding: 10px 15px;
+    margin: 15px 0;
+    border-radius: 4px;
+}
+
+.lrp-message.success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.lrp-message.error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}

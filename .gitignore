@@ -1,0 +1,31 @@
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# WordPress
+wp-config.php
+wp-content/uploads/
+wp-content/upgrade/
+
+# Development
+node_modules/
+vendor/
+*.log
+*.cache
+.env
+.env.local
+
+# Build artifacts
+*.zip
+*.tar.gz
+
+# Backup files
+*-backup*
+*.bak
+*.backup
