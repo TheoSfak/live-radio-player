@@ -58,25 +58,38 @@
             const button = $(this);
             const inputField = button.siblings('input[type="text"]');
             
+            // Check if wp.media is available
+            if (typeof wp === 'undefined' || typeof wp.media === 'undefined') {
+                alert('WordPress media library is not loaded. Please refresh the page and try again.');
+                return;
+            }
+            
             const mediaUploader = wp.media({
                 title: 'Select Fallback Image',
                 button: {
                     text: 'Use this image'
+                },
+                library: {
+                    type: 'image'
                 },
                 multiple: false
             });
             
             mediaUploader.on('select', function() {
                 const attachment = mediaUploader.state().get('selection').first().toJSON();
-                inputField.val(attachment.url);
                 
-                // Update preview
-                let preview = button.siblings('.lrp-image-preview');
-                if (preview.length === 0) {
-                    preview = $('<div class="lrp-image-preview"></div>');
-                    button.after(preview);
+                // Ensure we have a valid URL
+                if (attachment && attachment.url) {
+                    inputField.val(attachment.url);
+                    
+                    // Update preview
+                    let preview = button.siblings('.lrp-image-preview');
+                    if (preview.length === 0) {
+                        preview = $('<div class="lrp-image-preview"></div>');
+                        button.parent().append(preview);
+                    }
+                    preview.html('<img src="' + attachment.url + '" style="max-width: 150px; height: auto; margin-top: 10px;" />');
                 }
-                preview.html('<img src="' + attachment.url + '" style="max-width: 150px; height: auto; margin-top: 10px;" />');
             });
             
             mediaUploader.open();

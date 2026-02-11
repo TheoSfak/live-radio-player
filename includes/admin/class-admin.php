@@ -92,7 +92,7 @@ class LRP_Admin {
         wp_enqueue_script(
             'lrp-admin-js',
             LRP_PLUGIN_URL . 'assets/js/admin.js',
-            array( 'jquery', 'wp-color-picker' ),
+            array( 'jquery', 'wp-color-picker', 'media-upload', 'media-views' ),
             LRP_VERSION,
             true
         );
@@ -1462,10 +1462,10 @@ class LRP_Admin {
         $sanitized = is_array( $existing ) ? $existing : array();
         
         // Text fields
-        $text_fields = array( 'stream_url', 'mount_point', 'fallback_text', 'custom_lyrics_message', 'custom_player_class', 'custom_width', 'facebook_url', 'nowplaying_text', 'bg_image' );
+        $text_fields = array( 'stream_url', 'mount_point', 'fallback_text', 'custom_lyrics_message', 'custom_player_class', 'custom_width', 'facebook_url', 'nowplaying_text', 'bg_image', 'fallback_image' );
         foreach ( $text_fields as $field ) {
             if ( isset( $input[ $field ] ) ) {
-                if ( $field === 'bg_image' ) {
+                if ( $field === 'bg_image' || $field === 'fallback_image' ) {
                     $sanitized[ $field ] = esc_url_raw( $input[ $field ] );
                 } else {
                     $sanitized[ $field ] = sanitize_text_field( $input[ $field ] );
@@ -1545,11 +1545,6 @@ class LRP_Admin {
             foreach ( $tab_checkboxes[ $current_tab ] as $field ) {
                 $sanitized[ $field ] = isset( $input[ $field ] ) && $input[ $field ] === '1';
             }
-        }
-        
-        // Image URL
-        if ( isset( $input['fallback_image'] ) ) {
-            $sanitized['fallback_image'] = esc_url_raw( $input['fallback_image'] );
         }
         
         return $sanitized;
